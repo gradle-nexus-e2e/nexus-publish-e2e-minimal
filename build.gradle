@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.gradle-nexus-e2e"
-def versionSuffix = isOnCIServer() ? "ci" : "local"
+def versionSuffix = isOnCIServer() ? "ci${System.env.GITHUB_RUN_NUMBER ?: ''}" : "local"
 version = "0.0.1-$versionSuffix"
 
 sourceCompatibility = 1.8
@@ -52,12 +52,8 @@ nexusPublishing {
     repositories {
         sonatype {
             stagingProfileId = "248647f1a45ed6" //can reduce execution time by even 10 seconds
-            retrying {
-                maxRetries.set(50)
-            }
         }
     }
-    clientTimeout = Duration.ofSeconds(90)
 }
 
 publishing {
