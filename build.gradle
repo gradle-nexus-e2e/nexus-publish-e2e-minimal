@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.gradle-nexus-e2e"
-def versionSuffix = isOnCIServer() ? "ci${System.env.GITHUB_RUN_NUMBER ?: ''}" : "local"
+def versionSuffix = (System.env.CI == "true") ? "ci${System.env.GITHUB_RUN_NUMBER ?: ''}" : "local"
 version = "0.0.1-$versionSuffix"
 
 sourceCompatibility = 1.8
@@ -111,8 +111,4 @@ javadoc {
     if(JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
     }
-}
-
-private boolean isOnCIServer() {
-    System.env.CI == "true"
 }
