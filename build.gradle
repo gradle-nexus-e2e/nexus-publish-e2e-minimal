@@ -6,7 +6,8 @@ plugins {
 }
 
 group = "io.github.gradle-nexus-e2e"
-def versionSuffix = (System.env.CI == "true") ? "ci${System.env.GITHUB_RUN_NUMBER ?: ''}" : "local"
+String versionTimestamp = (new Date()).format("yyyyMMdd-HHmmss") //See: https://issues.sonatype.org/browse/OSSRH-86532
+String versionSuffix = (System.env.CI == "true") ? "ci${System.env.GITHUB_RUN_NUMBER ?: ''}-${versionTimestamp}" : "local"
 version = "0.0.1-$versionSuffix"
 
 sourceCompatibility = 1.8
